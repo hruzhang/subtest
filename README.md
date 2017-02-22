@@ -25,4 +25,4 @@ To load in R, type:
 
 `library("devtools")`
 
-`install_github("jamesliley/subtest")`
+`install_github("hruzhang/subtest")`
