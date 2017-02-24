@@ -19,7 +19,7 @@
 ##' @author James Liley
 ##' @examples
 ##' 1+1 # pending
-rand_gen=function(X,Z_a,pars_init1=c(0.8,0.15,2,1,2,1),pars_init0=c(0.8,0.15,2,2,1,0),weights=rep(1,length(Z_a)),Ca=NULL,Cd=NULL,n0=NULL,Yd=NULL, file=NULL,seed=NULL,...) {
+rand_gen=function(X,Z_a,pars_init1=c(0.8,0.15,2,1,2,1),pars_init0=c(0.8,0.15,2,2,1,0),weights=rep(1,length(Z_a)), n_repeat=10, Ca=NULL,Cd=NULL,n0=NULL,Yd=NULL, file=NULL,seed=NULL,...) {
 
 # Error handlers
 #
@@ -62,25 +62,25 @@ z_ad=z_ad[ww,];
 weights=weights[ww]
 
 
-parsf1=matrix(0,dim(pars_init1)[1],6) # fitted parameters
-lhd1=rep(0,dim(pars_init1)[1]) # likelihood of Z_d, Z_a|pars
-lha1=rep(0,dim(pars_init1)[1]) # likelihood of Z_a|pars
-n1=rep(0,dim(pars_init1)[1]) # number of iterations of EM algorithm for convergence
-for (i in 1:dim(pars_init1)[1]) {
-  yy1=fit.3g(z_ad,pars=pars_init1[i,],weights=weights,...)
+parsf1=matrix(0,n_repeat,6) # fitted parameters
+lhd1=rep(0,n_repeat) # likelihood of Z_d, Z_a|pars
+lha1=rep(0,n_repeat) # likelihood of Z_a|pars
+n1=rep(0,n_repeat) # number of iterations of EM algorithm for convergence
+for (i in 1:n_repeat) {
+  yy1=fit.3g(z_ad,pars=pars_init1,weights=weights,...)
   parsf1[i,]=yy1$pars
   lhd1[i]=yy1$logl
   lha1[i]=yy1$logl_a
   n1[i]=dim(yy1$hist)[1]
 }
 
-parsf0=matrix(0,dim(pars_init0)[1],6)
-lhd0=rep(0,dim(pars_init0)[1])
-lha0=rep(0,dim(pars_init0)[1])
-n0=rep(0,dim(pars_init0)[1])
+parsf0=matrix(0,n_repeat,6)
+lhd0=rep(0,n_repeat)
+lha0=rep(0,n_repeat)
+n0=rep(0,n_repeat)
 
-for (i in 1:dim(pars_init0)[1]) {
-  yy0=fit.3g(z_ad,pars=pars_init0[i,],fit_null=TRUE,weights=weights,...)
+for (i in 1:n_repeat) {
+  yy0=fit.3g(z_ad,pars=pars_init0,fit_null=TRUE,weights=weights,...)
   parsf0[i,]=yy0$pars
   lhd0[i]=yy0$logl
   lha0[i]=yy0$logl_a
