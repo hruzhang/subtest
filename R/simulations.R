@@ -30,7 +30,7 @@ if (length(pars_init1)!=6| !is(pars_init1,"numeric")| max(pars_init1[1:2])>1| pa
  stop("Parameter pars_init1 must be a six-element vector containing elements (pi0,pi1,tau,sigma_1,sigma_2,rho). The first five elements must be strictly positive and the sixth nonnegative. Parameters pi0 and pi1 must be less than 1 and sum to less than 1. Parameter rho must be less than tau*sigma_2.")
 if (length(pars_init0)!=6| !is(pars_init0,"numeric")| max(pars_init0[1:2])>1| pars_init0[1]+pars_init0[2]>1| min(pars_init0[1:5])<= 0 | pars_init0[6]==0 | pars_init0[6]>pars_init0[3]*pars_init0[5])
  stop("Parameter pars_init0 must be a six-element vector containing elements (pi0,pi1,tau,sigma_1,sigma_2,rho). The first five elements must be strictly positive and the sixth nonnegative. Parameters pi0 and pi1 must be less than 1 and sum to less than 1. Parameter rho must be less than tau*sigma_2.")
-if (n0>dim(X)[1]) stop("Parameter n0 must be less than the number of rows of X")
+if (!is.null(n0) ) if (n0>dim(X)[1]) stop("Parameter n0 must be less than the number of rows of X")
 if (!(is.null(Yd)||length(Yd)!=dim(X)[1])) stop("If specified, parameter Yd must have the same length as the number of rows of X")
 
 if (is.null(seed)) {
