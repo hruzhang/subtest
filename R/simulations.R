@@ -26,11 +26,11 @@ rand_gen=function(X,Z_a,pars_init1=c(0.8,0.15,2,1,2,1),pars_init0=c(0.8,0.15,2,2
 # Errors in the form of X and Cd will be caught  by function zd_scores
 
 if (dim(X)[2]!=length(Z_a)|dim(X)[2]!=length(weights)) stop("Parameter Z_a must correspond to the columns of X. Length of Z_a must be the same as the number of columns of X and the length of parameter 'weights'")
-if (length(pars_init1)!=6| !is(pars_init1,"numeric")| max(pars_init1[1:2])>1| pars_init1[1]+pars_init1[2]>1| min(pars_init1[1:5])<= 0 | pars_init1[6]==0 | pars_init1[6]>pars_init1[3]*pars_init1[5])
+if (length(pars_init1)!=6| !is(pars_init1,"numeric")| max(pars_init1[1:2])>1| pars_init1[1]+pars_init1[2]>1| min(pars_init1[1:5])<= 0 | pars_init1[6]<0 | pars_init1[6]>pars_init1[3]*pars_init1[5])
  stop("Parameter pars_init1 must be a six-element vector containing elements (pi0,pi1,tau,sigma_1,sigma_2,rho). The first five elements must be strictly positive and the sixth nonnegative. Parameters pi0 and pi1 must be less than 1 and sum to less than 1. Parameter rho must be less than tau*sigma_2.")
-if (length(pars_init0)!=6| !is(pars_init0,"numeric")| max(pars_init0[1:2])>1| pars_init0[1]+pars_init0[2]>1| min(pars_init0[1:5])<= 0 | pars_init0[6]==0 | pars_init0[6]>pars_init0[3]*pars_init0[5])
+if (length(pars_init0)!=6| !is(pars_init0,"numeric")| max(pars_init0[1:2])>1| pars_init0[1]+pars_init0[2]>1| min(pars_init0[1:5])<= 0 | pars_init0[6]<0 | pars_init0[6]>pars_init0[3]*pars_init0[5])
  stop("Parameter pars_init0 must be a six-element vector containing elements (pi0,pi1,tau,sigma_1,sigma_2,rho). The first five elements must be strictly positive and the sixth nonnegative. Parameters pi0 and pi1 must be less than 1 and sum to less than 1. Parameter rho must be less than tau*sigma_2.")
-if (!is.null(n0) ) if (n0>dim(X)[1]) stop("Parameter n0 must be less than the number of rows of X")
+if (!is.null(n0) ) if (n0>dim(X)[1]) stop("If specified, parameter n0 must be less than the number of rows of X")
 if (!(is.null(Yd)||length(Yd)!=dim(X)[1])) stop("If specified, parameter Yd must have the same length as the number of rows of X")
 
 if (is.null(seed)) {
