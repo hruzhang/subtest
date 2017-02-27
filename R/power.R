@@ -310,7 +310,7 @@ fit.em <- function(Z,weights=rep(1,length(Z)), pi0_init=0.9,sigma_init=2,tol=1e-
     e=lh1(pars[1]) + lh2(1-pars[1],pars[2]) 
     e[which(e==0)] <- 1e-64
     e[which(is.infinite(e))] <- 1e64
-    if(sumlog) return(sum(weights*log(e))) else return(-e)
+    if(sumlog) return(sum(weights*log(e), na.rm = TRUE)) else return(-e)
   }
   
   nit <- 1
