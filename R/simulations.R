@@ -71,7 +71,7 @@ for (i in 1:n_repeat) {
   parsf1[i,]=yy1$pars
   lhd1[i]=yy1$logl
   lha1[i]=yy1$logl_a
-  n1[i]=dim(yy1$history)[1]
+  n1[i]=0 #dim(yy1$history)[1]
 }
 
 parsf0=matrix(0,n_repeat,6)
@@ -84,7 +84,7 @@ for (i in 1:n_repeat) {
   parsf0[i,]=yy0$pars
   lhd0[i]=yy0$logl
   lha0[i]=yy0$logl_a
-  n0[i]=dim(yy0$history)[1]
+  n0[i]=0 #dim(yy0$history)[1]
 }
 
 
