@@ -67,7 +67,7 @@ lhd1=rep(0,n_repeat) # likelihood of Z_d, Z_a|pars
 lha1=rep(0,n_repeat) # likelihood of Z_a|pars
 n1=rep(0,n_repeat) # number of iterations of EM algorithm for convergence
 for (i in 1:n_repeat) {
-  yy1=fit.cond(zd,pars=pars_init1,fit_null=FALSE,weights=weights,...)
+  yy1=fit.cond(z_ad,pars=pars_init1,fit_null=FALSE,weights=weights,...)
   parsf1[i,]=yy1$pars
   lhd1[i]=yy1$logl
   lha1[i]=yy1$logl_a
@@ -80,7 +80,7 @@ lha0=rep(0,n_repeat)
 n0=rep(0,n_repeat)
 
 for (i in 1:n_repeat) {
-  yy0=fit.cond(zd,pars=pars_init0,fit_null=TRUE,weights=weights,...)
+  yy0=fit.cond(z_ad,pars=pars_init0,fit_null=TRUE,weights=weights,...)
   parsf0[i,]=yy0$pars
   lhd0[i]=yy0$logl
   lha0[i]=yy0$logl_a
