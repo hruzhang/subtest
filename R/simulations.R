@@ -62,45 +62,17 @@ z_ad=z_ad[ww,];
 weights=weights[ww]
 
 
-parsf1=matrix(0,n_repeat,6) # fitted parameters
-lhd1=rep(0,n_repeat) # likelihood of Z_d, Z_a|pars
-lha1=rep(0,n_repeat) # likelihood of Z_a|pars
-n1=rep(0,n_repeat) # number of iterations of EM algorithm for convergence
-for (i in 1:n_repeat) {
-  yy1=fit.cond(z_ad,pars=pars_init1,fit_null=FALSE,weights=weights,...)
-  parsf1[i,]=yy1$pars
-  lhd1[i]=yy1$logl
-  lha1[i]=yy1$logl_a
-  n1[i]=0 #dim(yy1$history)[1]
-}
+yy1=fit.cond(z_ad,pars=pars_init1,fit_null=FALSE,weights=weights,...)
+pars1=yy1$pars
+lhd1=yy1$logl
+lha1=yy1$logl_a
 
-parsf0=matrix(0,n_repeat,6)
-lhd0=rep(0,n_repeat)
-lha0=rep(0,n_repeat)
-n0=rep(0,n_repeat)
+yy0=fit.cond(z_ad,pars=pars_init0,fit_null=TRUE,weights=weights,...)
+pars0=yy0$pars
+lhd0=yy0$logl
+lha0=yy0$logl_a
 
-for (i in 1:n_repeat) {
-  yy0=fit.cond(z_ad,pars=pars_init0,fit_null=TRUE,weights=weights,...)
-  parsf0[i,]=yy0$pars
-  lhd0[i]=yy0$logl
-  lha0[i]=yy0$logl_a
-  n0[i]=0 #dim(yy0$history)[1]
-}
-
-
-wx0=which.max(lhd0)
-pars0=parsf0[wx0,]
-lh0=lhd0[wx0]
-la0=lha0[wx0]
-n0x=n0[wx0]
-
-wx1=which.max(lhd1)
-pars1=parsf1[wx1,]
-lh1=lhd1[wx1]
-la1=lha1[wx1]
-n1x=n1[wx1]
-
-vec=c(lh0,lh1,la1-la0,n0x,n1x,seed,pars0,pars1)
+vec=c(lhd0,lhd1,lha1-lha0,0,0,seed,pars0,pars1)
 
 if (!is.null(file)) write(vec,paste0(file,"/sim",as.character(seed),".txt"),append=FALSE,ncolumns=18) else print(vec)
 
